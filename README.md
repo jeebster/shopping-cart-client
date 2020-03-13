@@ -1,68 +1,49 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# shopping-cart-client
+Single page shopping cart application, authored in [React](https://reactjs.org/).
+This application leverages data from [shopping-cart-server](https://github.com/jeebster/shopping-cart-server)
 
-## Available Scripts
+## Instructions
 
-In the project directory, you can run:
+This application can be run in a docker container or locally
 
-### `yarn start`
+### Docker
+This application includes [Docker](https://www.docker.com/get-started) configuration for building/running the client
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Connect with API Server
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Edit the `REACT_APP_API_URL` environment variable in the `.env` file to match the URL of your [shopping-cart-server](https://github.com/jeebster/shopping-cart-server) container
 
-### `yarn test`
+### Build the Docker image
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```docker build -t jeebster/shopping-cart-client .```
 
-### `yarn build`
+### Run the Docker image
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```docker run -p ${YOUR_PORT_OF_CHOICE}:3000 -e CHOKIDAR_USEPOLLING=true -d jeebster/shopping-cart-client```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+The server should now be running at `http://localhost:${YOUR_PORT_OF_CHOICE}`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Local
+Edit the `REACT_APP_API_URL` environment variable in the `.env` file to match the URL of your [shopping-cart-server](https://github.com/jeebster/shopping-cart-server) local application
 
-### `yarn eject`
+With NPM
+```
+npm install
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+With Yarn
+```
+yarn install
+yarn start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tests
+Invoke `yarn test` to run the test suite
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+**NOTE:** Due to time constraints, tests were not fully completed; not all tests will pass
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Notes
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* Product quantity changes are not reflected relative to presence in shopping cart. This is a UX design decision - a product's quantity should change only after an order has been completed/authorized
+* Components make use of [Hooks](https://reactjs.org/docs/hooks-reference.html). State is persisted via [Context](https://reactjs.org/docs/hooks-reference.html#usecontext)
